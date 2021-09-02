@@ -32,11 +32,11 @@
 			#{/if}
 	<h3>
 		<span class="content-section"> Seja bem vindo,
-			${session.get('cliente.nome')}!</span> <!-- Pegando o nome do cliente que tá na sessão -->
+			${session.get('cliente.nome')}!</span> 
 	</h3>
 	<div style="position: absolute; right: 15px; top: 5px;">
 		<span>${session.get('cliente.email')} </span><a 
-			class="btn btn-success" href="@{Login.Logout}"> Sair</a> <!-- Pegando email do cliente que tá na sessão ao lado do botão Sair -->
+			class="btn btn-success" href="@{Login.Logout}"> Sair</a> 
 	</div>
 
 
@@ -64,7 +64,7 @@
 					<h1>Fazer Encomendas</h1>
 
 					<form action="@{UsuarioPadrao.salvarEncomenda()}" method="post">
-						<input class="form-control" type="hidden" name="encomenda.id" value="${encomenda?.id}"> <!-- Enviando o id da encomenda(Facilita na edicao) -->
+						<input class="form-control" type="hidden" name="encomenda.id" value="${encomenda?.id}"> 
 						
 			
               		
@@ -85,7 +85,7 @@
 						<br>
 						 
 						 
-						 #{if encomenda?.id != null} <!-- Traduzindo: se encomenda existir(depois de criada), adicione um produto abaixo -->
+						 #{if encomenda?.id != null}
 						 Produto: 
 						 <select name="idProduto">
 						<option></option>

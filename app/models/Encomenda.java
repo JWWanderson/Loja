@@ -14,16 +14,16 @@ import play.db.jpa.Model;
 @Entity
 public class Encomenda extends Model{
 
-	@Required //Validação para campo obrigatório
+	@Required 
 	public String endereco;
 	
-	@Required //Validação para campo obrigatório
+	@Required 
 	public String cep;
 	
-	@ManyToMany // Relacionamento ManyToMany - Muitos para Muitos (Muitas encomendas para muitos produtos)
+	@ManyToMany
 	@JoinTable(name="encomenda_produto") 
-	public List<Produto> produtos; //Lista de Produtos no Relacionamento
+	public List<Produto> produtos;
 	
 	@ManyToOne
-	public Usuario usuario; // Relacionamento ManyToOne - Muitos para um (Muitas encomenda associadas a um usuário)
+	public Usuario usuario; 
 }
