@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Abstract Wand - Encomendas de biscuit</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="@{'public/javascripts/scripts.js'}" crossorigin="anonymous"></script>
+<!-- Simple line icons-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
+	rel="stylesheet" />
+<!-- Google fonts-->
+<link href="@{'public/stylesheets/styles.css'}" rel="stylesheet"
+	type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="@{'public/stylesheets/styles.css'}" rel="stylesheet" />
+  <link rel="stylesheet" href="@{'public/assets/css/login.css'}">
+</head>
+<body id="page-top">
+
+	#{if flash.success}
+				<p style="color:red;">${flash.success}</p>
+			#{/if}
+			#{if flash.error}
+				<p style="color:red;">${flash.error}<p>
+			#{/if}
+	<h3>
+		<span class="content-section"> Seja bem vindo,
+			${session.get('cliente.nome')}!</span> <!-- Pegando o nome do cliente que tá na sessão -->
+	</h3>
+	<div style="position: absolute; right: 15px; top: 5px;">
+		<span>${session.get('cliente.email')} </span><a 
+			class="btn btn-success" href="@{Login.Logout}"> Sair</a> <!-- Pegando email do cliente que tá na sessão ao lado do botão Sair -->
+	</div>
+
+
+	<!-- Header-->
+	<img class="img-fluid" src="@{'public/images/Baby Yoda.jpeg'}">
+	<header class="masthead d-flex align-items-center">
+
+		<div class="container px-4 px-lg-5 text-center">
+			
+
+			<h1 class="mb-1">Abstract Wand</h1>
+			<h3 class="mb-5">
+				<em></em>
+			</h3>
+			<a class="btn btn-primary btn-xl" href="#about">Fazer Encomenda</a> <!-- Botões -->
+			<a class="btn btn-primary btn-xl" href="#portfolio">Ver Produtos</a>
+			<a class="btn btn-primary btn-xl" href="#lista">Listar Encomendas</a>
+		</div>
+	</header>
+	<!-- About-->
+	<section class="content-section bg-light" id="about">
+		<div class="container px-4 px-lg-5 text-center">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="form-group">
+					<h1>Fazer Encomendas</h1>
+
+					<form action="@{UsuarioPadrao.salvarEncomenda()}" method="post">
+						<input class="form-control" type="hidden" name="encomenda.id" value="${encomenda?.id}"> <!-- Enviando o id da encomenda(Facilita na edicao) -->
+						
+			
+              		
+						<br>
+						Endereco: <input id="email" class="form-group" type="text" name="encomenda.endereco"
+							value="${encomenda?.endereco}">#{error 'encomenda.endereco' /}<br> <!-- Inserindo endereco e exibindo abaixo erros de validacao se houver) -->
+							
+						 CEP: <input type="text" name="encomenda.cep" value="${encomenda?.cep}">#{error 'encomenda.cep' /}<br>
+						 	<!-- Inserindo cep e exibindo abaixo erros de validacao se houver) -->
+							
+						 	
+						 Usuario: <!-- Inserindo usuario e exibindo abaixo erros de validacao se houver) -->
+						 <select name="encomenda.usuario.id">
+						 #{list items: usuarios, as: 'usuario'}
+							<option value="${usuario.id}">${usuario.nome}</option>
+						 #{/list}
+						 </select>
+						<br>
+						 
+						 
+						 #{if encomenda?.id != null} <!-- Traduzindo: se encomenda existir(depois de criada), adicione um produto abaixo -->
+						 Produto: 
+						 <select name="idProduto">
+						<option></option>
+						#{list items: produtos, as: 'produto'}
+							<option value="${produto.id}">${produto.nome}</option>
+						#{/list}
+						</select>
+						 #{/if}
+						 <br>
+						<button>Salvar</button>
+					</form>
+					<br>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Callout-->
+	<section class="content-section bg-light" id="lista">
+		<div class="container px-4 px-lg-5 text-center">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="form-group">
+				<h1>Minhas Encomendas</h1><h5>Quantidade de Encomendas feitas: ${encomendas.produtos.size()}</h5>
+				#{list items:encomendas.produtos, as: 'produto'}
+					
+							<li><strong>Produto</strong>: ${produto.nome} | <strong>Preço:</strong> R$ ${produto.preco}  |
+				
+					#{list items:encomendas, as:'encomenda'}
+						
+						
+						<strong>Endereço:</strong> ${encomenda.endereco} <strong>| CEP:</strong> ${encomenda.cep} </li> <!-- Listagem de Encomendas -->
+					#{/list}
+					#{/list}
+					<br>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Portfolio-->
+	<section class="content-section" id="portfolio">
+		<div class="container px-4 px-lg-5">
+			<div class="content-section-heading text-center">
+				<h2 class="mb-5">Produtos</h2>
+			</div>
+			<div class="row gx-0">
+				<div class="col-lg-6">
+					<a class="portfolio-item" href="#!">
+						<div class="caption">
+							<div class="caption-content">
+								<div class="h2"></div>
+								<p class="mb-0">Boneca Funko Pop Anne</p>
+							</div>
+						</div> <img class="img-fluid" height="500px"
+						src="@{'public/images/Boneca Funko Pop Anne.jpeg'}" alt="..." />
+					</a>
+				</div>
+				<div class="col-lg-6">
+					<a class="portfolio-item" href="#!">
+						<div class="caption">
+							<div class="caption-content">
+								<div class="h2"></div>
+								<p class="mb-0">Boneca Penelope Charmosa</p>
+							</div>
+						</div> <img class="img-fluid" height="500px"
+						src="@{'public/images/Boneca Penelope Charmosa.jpeg'}" alt="..." />
+					</a>
+				</div>
+				<div class="col-lg-6">
+					<a class="portfolio-item" href="#!">
+						<div class="caption">
+							<div class="caption-content">
+								<div class="h2"></div>
+								<p class="mb-0">Carro topo de bolo Relapago Macqueen</p>
+							</div>
+						</div> <img class="img-fluid" height="500px"
+						src="@{'public/images/Carro topo de bolo Repapago Macqueen.jpeg'}"
+						alt="..." />
+					</a>
+				</div>
+				<div class="col-lg-6">
+					<a class="portfolio-item" href="#!">
+						<div class="caption">
+							<div class="caption-content">
+								<div class="h2"></div>
+								<p class="mb-0">Chaveiros coco e papel higienico</p>
+							</div>
+						</div> <img class="img-fluid" height="500px"
+						src="@{'public/images/Chaveiros coco e papel.jpeg'}" alt="..." />
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Call to Action-->
+	<!-- Map-->
+	<div class="map" id="contact">
+		<iframe
+			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.9639214843714!2d-36.631004985872714!3d-5.109517353182299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7b72a670f638fa9%3A0x3b28923ec87019dc!2sR.%20Baixa%20Verde%2C%20Macau%20-%20RN%2C%2059500-000!5e0!3m2!1spt-BR!2sbr!4v1626485083166!5m2!1spt-BR!2sbr"
+			width="600" height="450" style="border: 0;" allowfullscreen=""
+			loading="lazy"></iframe>
+		<br />
+
+	</div>
+	<!-- Footer-->
+	<footer class="footer text-center">
+		<div class="container px-4 px-lg-5">
+			<ul class="list-inline mb-5">
+				<li class="list-inline-item"><a
+					class="social-link rounded-circle text-white mr-3" href="#!"><i
+						class="icon-social-facebook"></i></a></li>
+				<li class="list-inline-item"><a
+					class="social-link rounded-circle text-white mr-3" href="#!"><i
+						class="icon-social-twitter"></i></a></li>
+				<li class="list-inline-item"><a
+					class="social-link rounded-circle text-white" href="#!"><i
+						class="icon-social-github"></i></a></li>
+			</ul>
+			<p class="text-muted small mb-0">Copyright &copy; Your Website
+				2021</p>
+		</div>
+	</footer>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"><i
+		class="fas fa-angle-up"></i></a>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="@{'public/javascripts/scripts.js'}"></script>
+</body>
+</html>
